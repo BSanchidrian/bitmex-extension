@@ -51,7 +51,7 @@
   flex: 1 1;
 }
 
-.message {
+.message-row {
   height: 20px;
   width: 100%;
   display: flex;

@@ -4,7 +4,10 @@
   "version": "1.0",
   "author": "Borja Sanchidrián",
   "description": "Bitmex extension",
-
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": ["*://www.bitmex.com/app/trade/*"],
@@ -19,5 +22,7 @@
       "css": ["css/libs/jquery-ui.css", "css/style.css"],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "page_action": { "default_popup": "html/settings.html" },
+  "permissions": ["declarativeContent", "storage"]
 }

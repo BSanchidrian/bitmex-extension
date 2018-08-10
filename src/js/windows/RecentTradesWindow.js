@@ -2,8 +2,8 @@ var messagesDiv = undefined;
 var minimumSizeRequired = 0;
 
 class RecentTradesWindow extends Window {
-  constructor(params) {
-    super(params.title, params.width, params.height, params.draggable);
+  constructor(options = {}) {
+    super(options);
     this.bitmexClient = new BitmexClient(this.onMessage);
 
     chrome.storage.sync.get("sizeRequired", function(data) {

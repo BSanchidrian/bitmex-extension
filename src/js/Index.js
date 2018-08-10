@@ -3,7 +3,8 @@ $(document).ready(function() {
     title: "Recent trades",
     width: 300,
     height: 250,
-    draggable: true
+    draggable: true,
+    position: [10, 10]
   });
   recentTradesWindow.render();
 });

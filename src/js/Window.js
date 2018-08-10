@@ -1,9 +1,20 @@
 class Window {
-  constructor(title = "Window", width = 400, height = 300, draggable = true) {
-    this.title = title;
-    this.width = width;
-    this.height = height;
-    this.draggable = draggable;
+  constructor(options = {}) {
+    if (!options || options == {}) {
+      options = {
+        title: "Window",
+        width: 400,
+        height: 300,
+        draggable: true,
+        position: [0, 0]
+      };
+    }
+
+    this.title = options.title;
+    this.width = options.width;
+    this.height = options.height;
+    this.draggable = options.draggable;
+    this.position = options.position;
   }
 
   render() {
@@ -13,8 +24,8 @@ class Window {
       class: "window ui-widget-content",
       css: {
         position: "absolute",
-        top: 0,
-        left: 0
+        top: this.position[0],
+        left: this.position[1]
       }
     }).appendTo("body");
 

@@ -1,10 +1,15 @@
-var messages = undefined;
+var messagesDiv = undefined;
+var minimumSizeRequired = 0;
 
 class RecentTradesWindow extends Window {
   constructor(params) {
     super(params.title, params.width, params.height, params.draggable);
     this.bitmexClient = new BitmexClient(this.onMessage);
-    // this.bitmexClient.subscribe("trade", "XBTUSD");
+
+    chrome.storage.sync.get("sizeRequired", function(data) {
+      minimumSizeRequired = data.sizeRequired;
+      console.log("Minimum size required: ", minimumSizeRequired);
+    });
   }
 
   onMessage(message, flags) {
@@ -12,7 +17,15 @@ class RecentTradesWindow extends Window {
 
     if (json.table === "trade" && json.action === "insert") {
       json.data.forEach(element => {
-        RecentTradesWindow.createMessage(element).prependTo(messages);
+        if (element.size < minimumSizeRequired) return;
+
+        Window.createMessage(element).prependTo(messagesDiv);
+        // delete child nodes to avoid overflow
+        if (messagesDiv[0].childNodes.length > 200) {
+          for(let i = messagesDiv[0].childNodes.length - 1; i >= 100; i--) {
+            messagesDiv[0].removeChild(messagesDiv[0].childNodes[i]);
+          }
+        }
       });
     }
   }
@@ -20,41 +33,12 @@ class RecentTradesWindow extends Window {
   render() {
     super.render();
 
-    messages = jQuery("<div>", {
+    const messages = jQuery("<div>", {
       class: "messages"
     }).appendTo(this.windowBody);
 
-    jQuery("<div>", {
+    messagesDiv = jQuery("<div>", {
       class: "messages-inner"
     }).appendTo(messages);
-  }
-
-  static createMessage(params) {
-    const message = jQuery("<div>", {
-      class: `message ${params.side}`
-    });
-
-    jQuery("<div>", {
-      class: "message-price",
-      text: params.price
-    }).appendTo(message);
-
-    jQuery("<div>", {
-      class: "message-amount",
-      text: params.size
-    }).appendTo(message);
-
-    let timestamp = new Date(params.timestamp);
-    jQuery("<div>", {
-      class: "message-time",
-      text: `${timestamp.getHours()}:${timestamp.getMinutes()}:${timestamp.getSeconds()}`
-    }).appendTo(message);
-
-    jQuery("<div>", {
-      class: "message-side",
-      text: params.side === "Buy" ? "B" : "S"
-    }).appendTo(message);
-
-    return message;
   }
 }

@@ -35,4 +35,33 @@ class Window {
       this.window.resizable();
     }
   }
+
+  static createMessage(params) {
+    const message = jQuery("<div>", {
+      class: `message-row ${params.side}`
+    });
+
+    jQuery("<div>", {
+      class: "message-price",
+      text: params.price
+    }).appendTo(message);
+
+    jQuery("<div>", {
+      class: "message-amount",
+      text: params.size
+    }).appendTo(message);
+
+    let timestamp = new Date(params.timestamp);
+    jQuery("<div>", {
+      class: "message-time",
+      text: `${timestamp.getHours()}:${timestamp.getMinutes()}:${timestamp.getSeconds()}`
+    }).appendTo(message);
+
+    jQuery("<div>", {
+      class: "message-side",
+      text: params.side === "Buy" ? "B" : "S"
+    }).appendTo(message);
+
+    return message;
+  }
 }

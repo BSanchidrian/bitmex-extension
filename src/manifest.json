@@ -14,10 +14,10 @@
       "js": [
         "js/libs/jquery-3.2.1.min.js",
         "js/libs/jquery-ui.min.js",
-        "js/exchange/BitmexClient.js",
-        "js/Window.js",
-        "js/windows/RecentTradesWindow.js",
-        "js/Index.js"
+        "js/exchange/bitmex_client.js",
+        "js/window.js",
+        "js/windows/recent_trades_window.js",
+        "js/index.js"
       ],
       "css": ["css/libs/jquery-ui.css", "css/style.css"],
       "run_at": "document_start"

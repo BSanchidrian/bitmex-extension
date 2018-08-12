@@ -12,9 +12,11 @@
     {
       "matches": ["*://www.bitmex.com/app/trade/*"],
       "js": [
+        "js/Utils.js",
         "js/libs/jquery-3.2.1.min.js",
         "js/libs/jquery-ui.min.js",
         "js/exchange/BitmexClient.js",
+        "js/TabWindow.js",
         "js/Window.js",
         "js/windows/RecentTradesWindow.js",
         "js/Index.js"
@@ -22,6 +24,10 @@
       "css": ["css/libs/jquery-ui.css", "css/style.css"],
       "run_at": "document_start"
     }
+  ],
+  "web_accessible_resources": [
+    "js/libs/jquery-3.2.1.min.js",
+    "js/injectables/Test.js"
   ],
   "page_action": { "default_popup": "html/settings.html" },
   "permissions": ["declarativeContent", "storage"]
